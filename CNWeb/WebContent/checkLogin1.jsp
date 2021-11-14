@@ -31,7 +31,26 @@
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int socot = rsmd.getColumnCount();
 		int isExist = 0;
-		while(rs.next())
+		if(rs.getRow() == 0)
+		{
+			request.setAttribute("address", address);
+			RequestDispatcher rd = request.getRequestDispatcher("Welcome1.jsp");
+			rd.forward(request, response);
+		}
+		else 
+		{
+			response.sendRedirect("login1.jsp");
+		}
+		
+		rs.close();
+		stm.close();
+	%>
+</body>
+</html>
+
+<%-- 
+
+while(rs.next())
 		{
 			if((rs.getString(1)).equals(userName) && (rs.getString(2)).equals(passWord))
 			{
@@ -51,10 +70,4 @@
 			response.sendRedirect("login1.jsp");
 		}
 		
-		
-		
-		rs.close();
-		stm.close();
-	%>
-</body>
-</html>
+ --%>

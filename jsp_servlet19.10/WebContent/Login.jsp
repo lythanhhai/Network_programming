@@ -19,5 +19,8 @@
 		PW: <input type="password" name="pw"><br>
 		<input type="submit" value="Login">
 	</form>
+	<form action="CheckRegisterServlet">
+		<input type="submit" value="Register">
+	</form>
 </body>
 </html>
