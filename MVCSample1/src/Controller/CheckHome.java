@@ -11,59 +11,63 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Model.BO.*;
-import Model.bean.*;
+import Model.BO.CheckUser_BO;
+import Model.bean.User;
 
 /**
- * Servlet implementation class CheckLoginServlet
+ * Servlet implementation class CheckHome
  */
-@WebServlet("/CheckLoginServlet")
-public class CheckLoginServlet extends HttpServlet {
+@WebServlet("/CheckHome")
+public class CheckHome extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckLoginServlet() {
+    public CheckHome() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
 		String destination = null;
-		String userName = request.getParameter("userName");
-		String passWord = request.getParameter("passWord");
 		CheckUser_BO checkUser_BO = new CheckUser_BO();
 		ArrayList<User> listUser = new ArrayList<User>();
-		
-		if(checkUser_BO.checkUser_BO(userName, passWord) == true)
+		try {
+			listUser = checkUser_BO.getAllUser_BO("1");
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String show = request.getParameter("show");
+		String insert = request.getParameter("insert");
+		if(show != null)
 		{
-			try {
-				listUser = checkUser_BO.getAllUser_BO(userName);
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			request.setAttribute("listUser", listUser);
-			destination = "/Home.jsp";
+			destination = "/Welcome.jsp";
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-			rd.forward(request, response);
-			
+			rd.forward(request, response);			
 		}
-		else 
+		if(insert != null)
 		{
-			destination = "/Login.jsp";
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-			rd.forward(request, response);
+//			request.setAttribute("listUser", listUser);
+//			destination = "/Welcome.jsp";
+//			RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+//			rd.forward(request, response);
+			destination = "formInsert.jsp";
+			response.sendRedirect(destination);
 		}
-		
+
 	}
 
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

@@ -21,4 +21,9 @@ public class CheckUser_BO {
 	{
 		return checkUser_DAO.getAllUser_DAO(userName);
 	}
+	
+	public void insert_BO(String name, String address, boolean Alive) throws ClassNotFoundException, SQLException
+	{
+		checkUser_DAO.insert_DAO(name, address, Alive);
+	}
 }
