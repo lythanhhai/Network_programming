@@ -53,6 +53,19 @@ public class CheckUser_DAO {
 		}
 		return listUser;
 	}
+	
+	public void insert_DAO(String name, String address, boolean Alive) throws ClassNotFoundException, SQLException
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		String url = "jdbc:mysql://localhost:3307/mvc_cnweb";
+		String user = "root";
+		Connection con = DriverManager.getConnection(url, user, "");
+		Statement stm = con.createStatement();
+		String sql = "insert into user values('" + name + "','" + address + "'," + String.valueOf(Alive) + ")";
+		//String sql = "insert into user values('1', '2', 1)";
+		
+		stm.executeUpdate(sql);
+	}
 }
 
 //ArrayList<User> listUser = new ArrayList<User>();
